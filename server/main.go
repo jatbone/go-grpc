@@ -17,7 +17,7 @@ type helloServer struct {
 }
 
 func main() {
-	list, err := net.Listen("tcp", port)
+	lis, err := net.Listen("tcp", port)
 
 	if err != nil {
 		log.Fatalf("Failed to start server %v", err)
@@ -25,9 +25,9 @@ func main() {
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterGreetServiceServer(grpcServer, &helloServer{})
-	log.Printf("server started at %v", list.Addr())
+	log.Printf("server started at %v", lis.Addr())
 
-	if err := grpcServer.Serve(list); err != nil {
+	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("Failed to start %v", err)
 	}
 
